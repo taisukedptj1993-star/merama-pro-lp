@@ -414,10 +414,30 @@
         <li>メールサポート</li>
       </ul>
 
-      <!-- PayPalサブスクリプションボタン（審査完了後に差し替え） -->
-      <div id="paypal-button-container">
-        準備中 — まもなく申し込みボタンが表示されます
-      </div>
+      <!-- PayPalサブスクリプションボタン -->
+      <div id="paypal-button-container"></div>
+      <script src="https://www.paypal.com/sdk/js?client-id=AZFFBVzVGrk14dNxmrKkHhDDDkeWiOIsSHT9mKuOdKoMW2b1Fx2rqC3qbU0d6njcTYIrqxiEjJgq1xQa&vault=true&intent=subscription&currency=JPY" data-sdk-integration-source="button-factory"></script>
+      <script>
+        paypal.Buttons({
+          style: {
+            shape: 'rect',
+            color: 'gold',
+            layout: 'vertical',
+            label: 'subscribe'
+          },
+          createSubscription: function(data, actions) {
+            return actions.subscription.create({
+              plan_id: 'P-7SR76390AD1932915NHU2XWI'
+            });
+          },
+          onApprove: function(data, actions) {
+            alert('ご購入ありがとうございます！\n登録メールアドレス宛にダウンロードURLをお送りします。\n通常24時間以内にご案内いたします。');
+          },
+          onError: function(err) {
+            alert('エラーが発生しました。再度お試しください。');
+          }
+        }).render('#paypal-button-container');
+      </script>
 
       <p class="price-note">
         ※ 初月5,000円、2ヶ月目以降は11,000円（税込）に自動移行します<br>
